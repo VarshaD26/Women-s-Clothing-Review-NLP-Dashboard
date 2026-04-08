@@ -15,7 +15,7 @@ with open("styles/lux_ui.css") as f:
 # ------------------------------------------------------------
 st.markdown("""
 <div class="lux-header">
-    <h1>📌 NLP Dashboard Overview & Strategic Objectives</h1>
+    <h1> NLP Dashboard Overview & Strategic Objectives</h1>
     <p>Understand customer sentiment, recurring themes, and product experience across Women's Clothing reviews.</p>
 </div>
 """, unsafe_allow_html=True)
@@ -30,7 +30,7 @@ df = load_data()
 # ------------------------------------------------------------
 # INTRO SUMMARY
 # ------------------------------------------------------------
-st.write("## 📦 Dataset Summary")
+st.write("## Dataset Summary")
 
 col1, col2, col3 = st.columns(3)
 
@@ -50,10 +50,10 @@ st.markdown("---")
 # ------------------------------------------------------------
 # OBJECTIVES (Your Updated Clothing Domain Version)
 # ------------------------------------------------------------
-st.write("## 🎯 Analysis Objectives (Women’s Clothing)")
+st.write("## Analysis Objectives (Women’s Clothing)")
 
 st.markdown("""
-### 1️⃣ Identify Key Themes in Customer Reviews  
+### Identify Key Themes in Customer Reviews  
 Use NLP techniques to uncover themes focused on:
 - Fit & sizing issues  
 - Fabric/material quality  
@@ -64,7 +64,7 @@ Use NLP techniques to uncover themes focused on:
 
 ---
 
-### 2️⃣ Perform Sentiment Analysis  
+### Perform Sentiment Analysis  
 Analyze emotional tone across thousands of reviews to reveal:
 - Which clothing attributes drive **positive sentiment**  
 - What triggers **negative sentiment** (tight fit, poor stitching, thin fabric)  
@@ -72,7 +72,7 @@ Analyze emotional tone across thousands of reviews to reveal:
 
 ---
 
-### 3️⃣ Extract Actionable Insights  
+### Extract Actionable Insights  
 Transform customer wording into clear insights to guide:
 - Sizing standardization  
 - Material upgrades  
@@ -81,7 +81,7 @@ Transform customer wording into clear insights to guide:
 
 ---
 
-### 4️⃣ Provide Data-Driven Recommendations  
+### Provide Data-Driven Recommendations  
 Offer evidence-backed recommendations such as:
 - Improve **size consistency**  
 - Provide better **fabric descriptions**  
@@ -90,7 +90,7 @@ Offer evidence-backed recommendations such as:
 
 ---
 
-### 5️⃣ Improve Product Quality  
+### Improve Product Quality  
 Fix problem areas frequently mentioned in **negative reviews**:
 - Fabric feels cheap / thin  
 - Fit runs small or large  
@@ -99,7 +99,7 @@ Fix problem areas frequently mentioned in **negative reviews**:
 
 ---
 
-### 6️⃣ Enhance Marketing Strategies  
+### Enhance Marketing Strategies  
 Leverage insights from **5-star reviews**:
 - Comfort & flattering cut  
 - Premium-feel materials  
@@ -107,7 +107,7 @@ Leverage insights from **5-star reviews**:
 
 ---
 
-### 7️⃣ Guide Product Development & Innovation  
+### Guide Product Development & Innovation  
 Use themes extracted to:
 - Improve product lines  
 - Launch new variants (sizes, fits, colors)  
@@ -115,7 +115,7 @@ Use themes extracted to:
 
 ---
 
-### 8️⃣ Monitor Customer Sentiment Proactively  
+### Monitor Customer Sentiment Proactively  
 Continuously analyze incoming reviews to:
 - Detect emerging issues early  
 - Identify product batch defects  
@@ -128,7 +128,7 @@ st.markdown("---")
 # ------------------------------------------------------------
 # WHY THIS DASHBOARD MATTERS
 # ------------------------------------------------------------
-st.write("## 💡 Why This Dashboard Is Important")
+st.write("## Why This Dashboard Is Important")
 
 st.markdown("""
 This system helps product teams, designers, and business analysts uncover patterns that  
