@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+matplotlib
+altair
+nltk
+wordcloud
+scikit-learn
+fpdf
+transformers
+torch
+sentencepiece

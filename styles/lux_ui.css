@@ -1,0 +1,85 @@
+/* -----------------------------------
+   LUXURY FASHION ANALYTICS UI THEME
+   Purple × Pink (Premium E-Commerce)
+----------------------------------- */
+
+body, .main {
+    font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 800 !important;
+    letter-spacing: -0.4px;
+}
+
+.block-container {
+    padding-top: 2rem;
+}
+
+
+/* Gradient luxury header */
+.lux-header {
+    background: linear-gradient(135deg, #B388FF, #7C4DFF 40%, #FF80AB);
+    color: white !important;
+    padding: 35px 25px;
+    border-radius: 18px;
+    margin-bottom: 35px;
+    box-shadow: 0px 12px 32px rgba(0,0,0,0.15);
+}
+
+.lux-card {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    padding: 22px;
+    border-radius: 18px;
+    margin-top: 12px;
+    transition: 0.2s ease;
+    border: 1px solid #E0D0FF;
+}
+
+.lux-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0px 16px 32px rgba(0,0,0,0.15);
+}
+
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #F7F3FF, #FFFFFF);
+    border-right: 1px solid #E5D6FF;
+}
+
+
+/* Buttons */
+.stButton>button {
+    background: linear-gradient(135deg, #7C4DFF, #B388FF);
+    color: white !important;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-weight: 700;
+    border: none;
+}
+
+.stButton>button:hover {
+    background: linear-gradient(135deg, #5E35B1, #8E24AA);
+}
+
+
+/* Metrics */
+[data-testid="stMetricDelta"] {
+    color: #7C4DFF !important;
+    font-weight: 600;
+}
+
+.stMetric {
+    background: #F8F4FF;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+
+/* Inputs */
+.stSelectbox > div > div, .stTextInput input {
+    border-radius: 12px !important;
+    padding: 6px !important;
+}
