@@ -106,6 +106,15 @@ def add_vader_sentiment(df):
 # WORDCLOUD (FIXED)
 # -------------------------------
 def generate_wordcloud(texts, ngram_range=(1,1)):
+    from sklearn.feature_extraction.text import CountVectorizer
+    from wordcloud import WordCloud
+
+    # ✅ FIX: ensure clean list of strings
+    texts = [str(t) for t in list(texts) if str(t).strip() != ""]
+
+    if len(texts) == 0:
+        return WordCloud().generate("no data")
+
     vec = CountVectorizer(
         stop_words="english",
         ngram_range=ngram_range
@@ -126,7 +135,6 @@ def generate_wordcloud(texts, ngram_range=(1,1)):
     )
 
     return wc.generate_from_frequencies(freqs)
-
 # -------------------------------
 # NGRAMS + COMPLAINTS
 # -------------------------------
