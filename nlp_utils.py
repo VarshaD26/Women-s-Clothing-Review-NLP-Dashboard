@@ -155,30 +155,44 @@ def trending_complaints(df):
 # -------------------------------
 # TOPIC MODELING
 # -------------------------------
-def run_lda(texts, n_topics=5):
+# -------------------------------
+# TOPIC MODELING (FULL FIXED VERSION)
+# Replace ONLY your existing run_lda function in nlp_utils.py
+# -------------------------------
+
+def run_lda(corpus, n_topics=5, ngram_range=(1,1), max_features=2000):
+    """
+    LDA topic modeling compatible with Topic_Modeling.py
+    Returns:
+        lda model,
+        vectorizer,
+        topic word lists
+    """
+
     vec = CountVectorizer(
         stop_words="english",
-        max_features=2000
+        max_features=max_features,
+        ngram_range=ngram_range
     )
 
-    X = vec.fit_transform(texts)
+    X = vec.fit_transform(corpus)
 
     lda = LatentDirichletAllocation(
         n_components=n_topics,
-        random_state=42
+        random_state=42,
+        learning_method="batch"
     )
 
     lda.fit(X)
 
-    words = vec.get_feature_names_out()
+    terms = vec.get_feature_names_out()
     topics = []
 
-    for topic in lda.components_:
-        top_words = [words[i] for i in topic.argsort()[-10:]]
+    for idx, topic in enumerate(lda.components_):
+        top_words = [terms[i] for i in topic.argsort()[-10:]]
         topics.append(top_words)
 
-    return topics
-
+    return lda, vec, topics
 # -------------------------------
 # MODEL TRAINING
 # -------------------------------
