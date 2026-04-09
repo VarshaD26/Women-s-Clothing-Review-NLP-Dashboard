@@ -6,7 +6,7 @@ import streamlit as st
 import io
 
 # -------------------------------
-# DOWNLOAD NLTK DATA
+# DOWNLOAD NLTK DATA (ALL REQUIRED)
 # -------------------------------
 def download_nltk():
     resources = [
@@ -35,7 +35,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 
 from wordcloud import WordCloud
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from sklearn.decomposition import LatentDirichletAllocation
+from sklearn.decomposition import LatentDirichletAllocation, PCA
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -45,7 +45,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
 
 # -------------------------------
-# OPTIONAL HF SUPPORT
+# OPTIONAL HF SUPPORT (KEEP SAME)
 # -------------------------------
 HF_AVAILABLE = False
 
@@ -80,7 +80,7 @@ def get_clean_texts(df):
     return df["Review Text"].apply(clean_text)
 
 # -------------------------------
-# VADER SENTIMENT
+# VADER SENTIMENT (FIXED NAMES)
 # -------------------------------
 sia = SentimentIntensityAnalyzer()
 
@@ -103,24 +103,32 @@ def add_vader_sentiment(df):
     return df
 
 # -------------------------------
-# WORDCLOUD
+# WORDCLOUD (FIXED)
 # -------------------------------
-def generate_wordcloud(texts):
-    vec = CountVectorizer(stop_words="english")
+def generate_wordcloud(texts, ngram_range=(1,1)):
+    vec = CountVectorizer(
+        stop_words="english",
+        ngram_range=ngram_range
+    )
+
     bag = vec.fit_transform(texts)
 
-    freqs = dict(zip(vec.get_feature_names_out(), bag.sum(axis=0).A1))
+    freqs = dict(zip(
+        vec.get_feature_names_out(),
+        bag.sum(axis=0).A1
+    ))
 
     wc = WordCloud(
-        width=1200,
-        height=600,
-        background_color="white"
+        width=1400,
+        height=700,
+        background_color="white",
+        colormap="Purples"
     )
 
     return wc.generate_from_frequencies(freqs)
 
 # -------------------------------
-# TRENDING COMPLAINTS
+# NGRAMS + COMPLAINTS
 # -------------------------------
 def freq_ngrams(texts, ngram_range=(2,2)):
     vec = CountVectorizer(
@@ -153,22 +161,9 @@ def trending_complaints(df):
     return bi, tri
 
 # -------------------------------
-# TOPIC MODELING
+# LDA (FIXED)
 # -------------------------------
-# -------------------------------
-# TOPIC MODELING (FULL FIXED VERSION)
-# Replace ONLY your existing run_lda function in nlp_utils.py
-# -------------------------------
-
 def run_lda(corpus, n_topics=5, ngram_range=(1,1), max_features=2000):
-    """
-    LDA topic modeling compatible with Topic_Modeling.py
-    Returns:
-        lda model,
-        vectorizer,
-        topic word lists
-    """
-
     vec = CountVectorizer(
         stop_words="english",
         max_features=max_features,
@@ -188,11 +183,29 @@ def run_lda(corpus, n_topics=5, ngram_range=(1,1), max_features=2000):
     terms = vec.get_feature_names_out()
     topics = []
 
-    for idx, topic in enumerate(lda.components_):
+    for topic in lda.components_:
         top_words = [terms[i] for i in topic.argsort()[-10:]]
         topics.append(top_words)
 
     return lda, vec, topics
+
+# -------------------------------
+# LDA MAP (FIXED)
+# -------------------------------
+def lda_distance_map(lda_model):
+    comps = lda_model.components_
+
+    pca = PCA(n_components=2)
+    coords = pca.fit_transform(comps)
+
+    df = pd.DataFrame({
+        "x": coords[:,0],
+        "y": coords[:,1]
+    })
+
+    df["topic"] = ["Topic " + str(i+1) for i in range(len(df))]
+    return df
+
 # -------------------------------
 # MODEL TRAINING
 # -------------------------------
@@ -229,46 +242,14 @@ def train_model(df):
 def generate_pdf():
     buffer = io.BytesIO()
 
-    doc = SimpleDocTemplate(
-        buffer,
-        pagesize=letter
-    )
-
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
     styles = getSampleStyleSheet()
+
     elements = []
-
-    elements.append(
-        Paragraph(
-            "NLP Dashboard Report",
-            styles["Title"]
-        )
-    )
-
+    elements.append(Paragraph("NLP Dashboard Report", styles["Title"]))
     elements.append(Spacer(1, 12))
-
-    elements.append(
-        Paragraph(
-            "Generated successfully.",
-            styles["Normal"]
-        )
-    )
+    elements.append(Paragraph("Generated successfully.", styles["Normal"]))
 
     doc.build(elements)
 
     return buffer.getvalue()
-
-from sklearn.decomposition import PCA
-
-def lda_distance_map(lda_model):
-    comps = lda_model.components_
-    pca = PCA(n_components=2)
-    coords = pca.fit_transform(comps)
-
-    import pandas as pd
-    df = pd.DataFrame({
-        "x": coords[:, 0],
-        "y": coords[:, 1]
-    })
-
-    df["topic"] = ["Topic " + str(i+1) for i in range(len(df))]
-    return df
