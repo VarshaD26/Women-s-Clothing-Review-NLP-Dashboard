@@ -13,7 +13,8 @@ def download_nltk():
         ('corpora/stopwords', 'stopwords'),
         ('sentiment/vader_lexicon', 'vader_lexicon'),
         ('tokenizers/punkt', 'punkt'),
-        ('tokenizers/punkt_tab', 'punkt_tab')
+        ('tokenizers/punkt_tab', 'punkt_tab'),
+        ('corpora/wordnet', 'wordnet')
     ]
 
     for path, name in resources:
