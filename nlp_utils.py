@@ -242,3 +242,19 @@ def generate_pdf():
     doc.build(elements)
 
     return buffer.getvalue()
+
+from sklearn.decomposition import PCA
+
+def lda_distance_map(lda_model):
+    comps = lda_model.components_
+    pca = PCA(n_components=2)
+    coords = pca.fit_transform(comps)
+
+    import pandas as pd
+    df = pd.DataFrame({
+        "x": coords[:, 0],
+        "y": coords[:, 1]
+    })
+
+    df["topic"] = ["Topic " + str(i+1) for i in range(len(df))]
+    return df
